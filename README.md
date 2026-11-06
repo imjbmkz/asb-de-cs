@@ -64,11 +64,11 @@ Everything lives in a single DuckDB file (`data/warehouse/wwi.duckdb`); schemas 
 | Transformations | DuckDB SQL (`sql/` files + SQL generated from the catalog for the generic loaders) |
 | SCD / fact loading | DuckDB `UPDATE … FROM`, `INSERT`, `MERGE INTO` |
 | Orchestration | Python functions with explicit dependencies (`src/wwi_pipeline/pipeline.py`) |
-| Download | Python standard library (`urllib`, `zipfile`) – Kaggle REST API |
+| Download | [`kagglehub`](https://github.com/Kaggle/kagglehub) (`dataset_download`) – files are then ingested by DuckDB |
 
 Prerequisites: **Python ≥ 3.10** and ~3 GB free disk (≈0.9 GB raw CSV + ≈1.5 GB database).
 The full pipeline runs in about one minute on a 4-core machine with 16 GB RAM.
-The only Python dependency is `duckdb`.
+Python dependencies: `duckdb` and `kagglehub` (with the pandas extra, used only by the optional `preview` command).
 
 ## 3. Setup
 
@@ -98,16 +98,23 @@ variables in your shell.
 
 Dataset: [Wide World Importers CSV dataset on Kaggle](https://www.kaggle.com/datasets/pauloviniciusornelas/wwimporters).
 
-**Automatic (recommended).** The pipeline's first task downloads the dataset when required files are
-missing:
+**Automatic (recommended).** The pipeline's first task downloads the dataset with `kagglehub`
+when required files are missing:
 
-1. Create a Kaggle API token (Kaggle → Settings → *Create New Token*).
-2. Put `KAGGLE_USERNAME` / `KAGGLE_KEY` into `.env`, or place `kaggle.json` in `~/.kaggle/`.
-3. Run the pipeline (or only `python run_pipeline.py download`).
+1. If Kaggle asks for authentication, create an API token (Kaggle → Settings → *Create New Token*)
+   and put `KAGGLE_USERNAME` / `KAGGLE_KEY` into `.env`, or place `kaggle.json` in `~/.kaggle/`.
+2. Run the pipeline (or only `python run_pipeline.py download`).
 
-The zip is downloaded to `data/downloads/` and its CSV files are extracted into `data/raw/`.
-If Kaggle cannot be reached, the downloader falls back to an unofficial public mirror of the same
-export (`WWI_MIRROR_URL`; set it to an empty value to disable the fallback).
+```python
+kagglehub.dataset_download("pauloviniciusornelas/wwimporters", output_dir="data/raw")
+```
+
+The CSV files land in `data/raw/` and are ingested by DuckDB (`read_csv`); pandas is not part of the
+pipeline. To inspect a single file the kagglehub pandas adapter is available:
+
+```bash
+python run_pipeline.py preview sales_customers.csv
+```
 
 **Manual.** Download the zip from Kaggle and unzip the CSV files into `data/raw/`
 (sub-folders and file-name case do not matter – `Sales_Customers.csv` and `sales_customers.csv`
@@ -139,7 +146,8 @@ Other commands:
 | `python run_pipeline.py make-scd-batch` | Creates the second input batch in `data/batches/batch_002/` |
 | `python run_pipeline.py run --batch-dir data/batches/batch_002 --batch-label batch_002` | Runs the pipeline with the change batch overlaid on the raw files |
 | `python run_pipeline.py report` | Runs the business queries → `docs/evidence/business_queries.md` |
-| `python run_pipeline.py download` | Download only |
+| `python run_pipeline.py download` | Download only (kagglehub) |
+| `python run_pipeline.py preview <file>` | First rows of one dataset file via the kagglehub pandas adapter |
 
 Useful options: `--raw-dir`, `--db`, `--threads`, `--no-download`, `--force-download`.
 Environment overrides: `WWI_RAW_DIR`, `WWI_DB_PATH`, `WWI_LOG_DIR`, `WWI_MEMORY_LIMIT`.
@@ -158,7 +166,7 @@ Makefile                         convenience targets
 src/wwi_pipeline/
   cli.py                         commands: run | demo | download | make-scd-batch | report
   pipeline.py                    ORCHESTRATION: task functions, dependency graph, runner
-  download.py                    step 0 – Kaggle download (+ mirror fallback)
+  download.py                    step 0 – Kaggle download with kagglehub (+ pandas preview)
   sources.py                     registry of source CSV files (FK load order)
   bronze.py                      CSV → bronze (DuckDB read_csv, metadata, file hash)
   silver.py                      bronze → OLTP: typing, de-dup, constraint validation, quarantine
@@ -187,7 +195,7 @@ docs/evidence/                   run summaries, logs, business-query results
 
 ```mermaid
 flowchart LR
-    K[(Kaggle<br/>wwimporters.zip)] -->|download_raw_files| R[/data/raw/*.csv<br/>immutable/]
+    K[(Kaggle<br/>pauloviniciusornelas/wwimporters)] -->|download_raw_files<br/>kagglehub| R[/data/raw/*.csv<br/>immutable/]
     B2[/data/batches/batch_002<br/>change batch/] -.overlay.-> V
     R --> V{validate_source_files}
     V --> P[prepare_oltp_database<br/>silver DDL + macros]
@@ -598,9 +606,9 @@ gold `fact_order` 2,219,399, `fact_sale` 1,280,094, `dim_customer` 1,488 rows af
   Because invoices stop on 2016-07-31 while orders continue, the "invoiced share" (Q6) is low for July
   and zero for August – a property of the extract, not of the pipeline.
 * **Where the evidence data came from.** Kaggle was not reachable from the environment in which the
-  evidence was produced, so the files were taken from the public mirror the downloader falls back to
-  (same file names and CSV format). If the Kaggle archive differs (e.g. file-name case or a sub-folder),
-  the pipeline still resolves the files; row counts in `docs/evidence/` may differ if the content does.
+  evidence was produced, so the files were taken from a public GitHub copy of the same export (same file
+  names and CSV format) and placed in `data/raw/` manually. File-name case and sub-folders do not
+  matter to the pipeline; row counts in `docs/evidence/` may differ if the Kaggle content does.
 * **Source history.** The export mixes current and historical temporal-table versions whose ranges
   overlap (and a set of versions dated 2021). Rather than reconstruct history from inconsistent
   ranges, the OLTP layer keeps the current version per key and archives the rest, and **warehouse

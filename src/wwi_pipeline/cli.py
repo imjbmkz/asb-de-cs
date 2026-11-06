@@ -2,7 +2,8 @@
 
     python -m wwi_pipeline run                 # full pipeline (single entry point)
     python -m wwi_pipeline demo                # run + idempotent re-run + SCD batch + report
-    python -m wwi_pipeline download            # only fetch the raw CSV files
+    python -m wwi_pipeline download            # only fetch the raw CSV files (kagglehub)
+    python -m wwi_pipeline preview FILE        # kagglehub pandas adapter: first rows of a file
     python -m wwi_pipeline make-scd-batch      # build the 2nd (change) batch
     python -m wwi_pipeline report              # business queries -> Markdown
 """
@@ -16,7 +17,7 @@ from datetime import date
 from pathlib import Path
 
 from .config import PROJECT_ROOT, Settings, load_dotenv
-from .download import download_raw_files
+from .download import DownloadError, download_raw_files, preview_file
 from .logging_utils import setup_logging
 from .pipeline import PipelineError, run_pipeline
 from .report import write_business_report, write_run_summary
@@ -66,6 +67,11 @@ def cmd_download(args: argparse.Namespace) -> int:
     setup_logging(s.log_dir, "download")
     files = download_raw_files(s)
     print(f"{len(files)} source files available in {s.raw_dir}")
+    return 0
+
+
+def cmd_preview(args: argparse.Namespace) -> int:
+    preview_file(args.file_path, args.rows)
     return 0
 
 
@@ -131,6 +137,11 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--force-download", action="store_true")
     p.set_defaults(func=cmd_download)
 
+    p = sub.add_parser("preview", help="show the first rows of one dataset file (kagglehub pandas adapter)")
+    p.add_argument("file_path", help="file inside the Kaggle dataset, e.g. sales_customers.csv")
+    p.add_argument("--rows", type=int, default=5)
+    p.set_defaults(func=cmd_preview)
+
     p = sub.add_parser("make-scd-batch", parents=[common], help="create the second (SCD change) batch")
     p.add_argument("--out", default=str(DEFAULT_BATCH_DIR))
     p.add_argument("--effective-date", default="2016-07-15")
@@ -155,6 +166,9 @@ def main(argv: list[str] | None = None) -> int:
         return args.func(args)
     except PipelineError as exc:
         print(f"Pipeline FAILED: {exc}", file=sys.stderr)
+        return 1
+    except DownloadError as exc:
+        print(f"Download FAILED: {exc}", file=sys.stderr)
         return 1
 
 
