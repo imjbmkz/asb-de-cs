@@ -1,0 +1,23 @@
+# Data (reproducible through the pipeline)
+data/raw/
+data/batches/
+data/warehouse/
+data/downloads/
+*.duckdb
+*.duckdb.wal
+
+# Logs (per-run log files; curated evidence lives in docs/evidence)
+logs/
+
+# Local configuration / credentials
+.env
+kaggle.json
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+build/
+dist/

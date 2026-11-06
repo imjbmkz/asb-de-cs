@@ -1,0 +1,77 @@
+{
+  "effective_date": "2016-07-15",
+  "changes": [
+    {
+      "table": "sales_customers",
+      "key_column": "CustomerID",
+      "key_value": "74",
+      "column": "CustomerCategoryID",
+      "new_value": "4",
+      "scd": "SCD2",
+      "note": "Tailspin Toys (Indios, PR): category Novelty Shop -> Supermarket"
+    },
+    {
+      "table": "sales_customers",
+      "key_column": "CustomerID",
+      "key_value": "62",
+      "column": "BuyingGroupID",
+      "new_value": "2.0",
+      "scd": "SCD2",
+      "note": "Tailspin Toys (Great Neck Estates, NY): buying group Tailspin Toys -> Wingtip Toys"
+    },
+    {
+      "table": "sales_customers",
+      "key_column": "CustomerID",
+      "key_value": "14",
+      "column": "CreditLimit",
+      "new_value": "5000.0",
+      "scd": "SCD2",
+      "note": "Tailspin Toys (Long Meadow, MD): credit limit (none) -> 5000"
+    },
+    {
+      "table": "sales_customers",
+      "key_column": "CustomerID",
+      "key_value": "14",
+      "column": "PaymentDays",
+      "new_value": "30",
+      "scd": "SCD2",
+      "note": "Tailspin Toys (Long Meadow, MD): payment days 7 -> 30"
+    },
+    {
+      "table": "sales_customers",
+      "key_column": "CustomerID",
+      "key_value": "2",
+      "column": "PhoneNumber",
+      "new_value": "(406) 555-0100",
+      "scd": "SCD1",
+      "note": "Tailspin Toys (Sylvanite, MT): phone number corrected (overwrite, no new version)"
+    },
+    {
+      "table": "warehouse_stockitems",
+      "key_column": "StockItemID",
+      "key_value": "4",
+      "column": "Brand",
+      "new_value": "Northwind",
+      "scd": "SCD2",
+      "note": "USB food flash drive - sushi roll: brand (none) -> Northwind"
+    },
+    {
+      "table": "warehouse_stockitems",
+      "key_column": "StockItemID",
+      "key_value": "10",
+      "column": "UnitPrice",
+      "new_value": "35.0",
+      "scd": "SCD2",
+      "note": "USB food flash drive - chocolate bar: unit price 32.00 -> 35.00"
+    },
+    {
+      "table": "warehouse_stockitems",
+      "key_column": "StockItemID",
+      "key_value": "97",
+      "column": "LeadTimeDays",
+      "new_value": "21",
+      "scd": "SCD1",
+      "note": "\"The Gu\" red shirt XML tag t-shirt (Black) 3XL: lead time 14 -> 21 days (overwrite)"
+    }
+  ]
+}
