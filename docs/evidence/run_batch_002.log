@@ -1,0 +1,194 @@
+2026-11-06 11:44:53 | INFO    | ====================================================================================================
+2026-11-06 11:44:53 | INFO    | WWI pipeline run 20261106T114453_03f591 | batch=batch_002 | db=/home/user/asb-de-cs/data/warehouse/wwi.duckdb
+2026-11-06 11:44:53 | INFO    | raw_dir=/home/user/asb-de-cs/data/raw batch_dir=/home/user/asb-de-cs/data/batches/batch_002
+2026-11-06 11:44:53 | INFO    | ====================================================================================================
+2026-11-06 11:44:53 | INFO    |   executing sql/audit_ddl.sql
+2026-11-06 11:44:53 | INFO    | [START] download_raw_files - Download the Kaggle CSV export if not present
+2026-11-06 11:44:53 | INFO    | All required raw files already present in /home/user/asb-de-cs/data/raw - download skipped
+2026-11-06 11:44:53 | INFO    | [DONE ] download_raw_files in 0.0s
+2026-11-06 11:44:53 | INFO    | [START] validate_source_files - Check required files exist
+2026-11-06 11:44:53 | INFO    |   application_countries              raw          26.2 KB  /home/user/asb-de-cs/data/raw/application_countries.csv
+2026-11-06 11:44:53 | INFO    |   application_stateprovinces         raw           4.4 KB  /home/user/asb-de-cs/data/raw/application_stateprovinces.csv
+2026-11-06 11:44:53 | INFO    |   application_cities                 raw        3604.7 KB  /home/user/asb-de-cs/data/raw/application_cities.csv
+2026-11-06 11:44:53 | INFO    |   application_people                 raw        1571.9 KB  /home/user/asb-de-cs/data/raw/application_people.csv
+2026-11-06 11:44:53 | INFO    |   application_deliverymethods        raw           0.7 KB  /home/user/asb-de-cs/data/raw/application_deliverymethods.csv
+2026-11-06 11:44:53 | INFO    |   application_paymentmethods         raw           0.3 KB  /home/user/asb-de-cs/data/raw/application_paymentmethods.csv
+2026-11-06 11:44:53 | INFO    |   application_transactiontypes       raw           0.9 KB  /home/user/asb-de-cs/data/raw/application_transactiontypes.csv
+2026-11-06 11:44:53 | INFO    |   purchasing_suppliercategories      raw           0.7 KB  /home/user/asb-de-cs/data/raw/purchasing_suppliercategories.csv
+2026-11-06 11:44:53 | INFO    |   purchasing_suppliers               raw          13.2 KB  /home/user/asb-de-cs/data/raw/purchasing_suppliers.csv
+2026-11-06 11:44:53 | INFO    |   warehouse_colors                   raw           1.9 KB  /home/user/asb-de-cs/data/raw/warehouse_colors.csv
+2026-11-06 11:44:53 | INFO    |   warehouse_packagetypes             raw           0.8 KB  /home/user/asb-de-cs/data/raw/warehouse_packagetypes.csv
+2026-11-06 11:44:53 | INFO    |   warehouse_stockgroups              raw           0.6 KB  /home/user/asb-de-cs/data/raw/warehouse_stockgroups.csv
+2026-11-06 11:44:53 | INFO    |   warehouse_stockitems               batch        65.7 KB  /home/user/asb-de-cs/data/batches/batch_002/warehouse_stockitems.csv
+2026-11-06 11:44:53 | INFO    |   warehouse_stockitemstockgroups     raw          12.7 KB  /home/user/asb-de-cs/data/raw/warehouse_stockitemstockgroups.csv
+2026-11-06 11:44:53 | INFO    |   warehouse_stockitemholdings        raw          11.3 KB  /home/user/asb-de-cs/data/raw/warehouse_stockitemholdings.csv
+2026-11-06 11:44:53 | INFO    |   sales_customercategories           raw           0.5 KB  /home/user/asb-de-cs/data/raw/sales_customercategories.csv
+2026-11-06 11:44:53 | INFO    |   sales_buyinggroups                 raw           0.2 KB  /home/user/asb-de-cs/data/raw/sales_buyinggroups.csv
+2026-11-06 11:44:53 | INFO    |   sales_customers                    batch      1130.2 KB  /home/user/asb-de-cs/data/batches/batch_002/sales_customers.csv
+2026-11-06 11:44:53 | INFO    |   sales_orders                       raw      118109.7 KB  /home/user/asb-de-cs/data/raw/sales_orders.csv
+2026-11-06 11:44:53 | INFO    |   sales_orderlines                   raw      245864.5 KB  /home/user/asb-de-cs/data/raw/sales_orderlines.csv
+2026-11-06 11:44:53 | INFO    |   sales_invoices                     raw      319642.4 KB  /home/user/asb-de-cs/data/raw/sales_invoices.csv
+2026-11-06 11:44:53 | INFO    |   sales_invoicelines                 raw      147130.6 KB  /home/user/asb-de-cs/data/raw/sales_invoicelines.csv
+2026-11-06 11:44:53 | INFO    |   sales_customertransactions         raw       66796.1 KB  /home/user/asb-de-cs/data/raw/sales_customertransactions.csv
+2026-11-06 11:44:53 | INFO    | [DONE ] validate_source_files in 0.0s
+2026-11-06 11:44:53 | INFO    | [START] prepare_oltp_database - Create OLTP (silver) schema
+2026-11-06 11:44:53 | INFO    |   executing sql/silver/00_macros.sql
+2026-11-06 11:44:53 | INFO    |   executing sql/silver/01_oltp_ddl.sql
+2026-11-06 11:44:54 | INFO    | [DONE ] prepare_oltp_database in 0.0s
+2026-11-06 11:44:54 | INFO    | [START] ingest_csv_to_bronze - CSV -> bronze staging
+2026-11-06 11:44:54 | INFO    |   bronze.application_countries                     190 rows  <- application_countries.csv
+2026-11-06 11:44:54 | INFO    |   bronze.application_stateprovinces                 53 rows  <- application_stateprovinces.csv
+2026-11-06 11:44:54 | INFO    |   bronze.application_cities                      37940 rows  <- application_cities.csv
+2026-11-06 11:44:54 | INFO    |   bronze.application_people                       7646 rows  <- application_people.csv
+2026-11-06 11:44:54 | INFO    |   bronze.application_deliverymethods                10 rows  <- application_deliverymethods.csv
+2026-11-06 11:44:54 | INFO    |   bronze.application_paymentmethods                  4 rows  <- application_paymentmethods.csv
+2026-11-06 11:44:54 | INFO    |   bronze.application_transactiontypes               13 rows  <- application_transactiontypes.csv
+2026-11-06 11:44:54 | INFO    |   bronze.purchasing_suppliercategories               9 rows  <- purchasing_suppliercategories.csv
+2026-11-06 11:44:54 | INFO    |   bronze.purchasing_suppliers                       42 rows  <- purchasing_suppliers.csv
+2026-11-06 11:44:54 | INFO    |   bronze.warehouse_colors                           36 rows  <- warehouse_colors.csv
+2026-11-06 11:44:54 | INFO    |   bronze.warehouse_packagetypes                     14 rows  <- warehouse_packagetypes.csv
+2026-11-06 11:44:54 | INFO    |   bronze.warehouse_stockgroups                      10 rows  <- warehouse_stockgroups.csv
+2026-11-06 11:44:54 | INFO    |   bronze.warehouse_stockitems                      230 rows  <- warehouse_stockitems.csv
+2026-11-06 11:44:54 | INFO    |   bronze.warehouse_stockitemstockgroups            442 rows  <- warehouse_stockitemstockgroups.csv
+2026-11-06 11:44:54 | INFO    |   bronze.warehouse_stockitemholdings               227 rows  <- warehouse_stockitemholdings.csv
+2026-11-06 11:44:54 | INFO    |   bronze.sales_customercategories                    8 rows  <- sales_customercategories.csv
+2026-11-06 11:44:54 | INFO    |   bronze.sales_buyinggroups                          2 rows  <- sales_buyinggroups.csv
+2026-11-06 11:44:54 | INFO    |   bronze.sales_customers                          3788 rows  <- sales_customers.csv
+2026-11-06 11:44:56 | INFO    |   bronze.sales_orders                          1068847 rows  <- sales_orders.csv
+2026-11-06 11:44:58 | INFO    |   bronze.sales_orderlines                      2219442 rows  <- sales_orderlines.csv
+2026-11-06 11:45:02 | INFO    |   bronze.sales_invoices                         583502 rows  <- sales_invoices.csv
+2026-11-06 11:45:07 | INFO    |   bronze.sales_invoicelines                    1280135 rows  <- sales_invoicelines.csv
+2026-11-06 11:45:09 | INFO    |   bronze.sales_customertransactions             599367 rows  <- sales_customertransactions.csv
+2026-11-06 11:45:09 | INFO    | [DONE ] ingest_csv_to_bronze in 15.2s
+2026-11-06 11:45:09 | INFO    | [START] load_oltp_silver - bronze -> typed OLTP + quarantine
+2026-11-06 11:45:09 | INFO    |   silver.application_countries              loaded=190       archived=0      quarantined=0     dup=0    invalid_casts=0
+2026-11-06 11:45:09 | INFO    |   silver.application_stateprovinces         loaded=53        archived=0      quarantined=0     dup=0    invalid_casts=0
+2026-11-06 11:45:09 | INFO    |   silver.application_cities                 loaded=37940     archived=0      quarantined=0     dup=0    invalid_casts=0
+2026-11-06 11:45:09 | INFO    |   silver.application_people                 loaded=3129      archived=4517   quarantined=0     dup=0    invalid_casts=0
+2026-11-06 11:45:09 | INFO    |   silver.application_deliverymethods        loaded=10        archived=0      quarantined=0     dup=0    invalid_casts=0
+2026-11-06 11:45:09 | INFO    |   silver.application_paymentmethods         loaded=4         archived=0      quarantined=0     dup=0    invalid_casts=0
+2026-11-06 11:45:09 | INFO    |   silver.application_transactiontypes       loaded=13        archived=0      quarantined=0     dup=0    invalid_casts=0
+2026-11-06 11:45:09 | INFO    |   silver.purchasing_suppliercategories      loaded=9         archived=0      quarantined=0     dup=0    invalid_casts=0
+2026-11-06 11:45:09 | INFO    |   silver.purchasing_suppliers               loaded=14        archived=28     quarantined=0     dup=0    invalid_casts=0
+2026-11-06 11:45:09 | INFO    |   silver.warehouse_colors                   loaded=36        archived=0      quarantined=0     dup=0    invalid_casts=0
+2026-11-06 11:45:09 | INFO    |   silver.warehouse_packagetypes             loaded=14        archived=0      quarantined=0     dup=0    invalid_casts=0
+2026-11-06 11:45:10 | INFO    |   silver.warehouse_stockgroups              loaded=10        archived=0      quarantined=0     dup=0    invalid_casts=0
+2026-11-06 11:45:10 | INFO    |   silver.warehouse_stockitems               loaded=227       archived=3      quarantined=0     dup=0    invalid_casts=0
+2026-11-06 11:45:10 | INFO    |   silver.warehouse_stockitemstockgroups     loaded=442       archived=0      quarantined=0     dup=0    invalid_casts=0
+2026-11-06 11:45:10 | INFO    |   silver.warehouse_stockitemholdings        loaded=227       archived=0      quarantined=0     dup=0    invalid_casts=0
+2026-11-06 11:45:10 | INFO    |   silver.sales_customercategories           loaded=8         archived=0      quarantined=0     dup=0    invalid_casts=0
+2026-11-06 11:45:10 | INFO    |   silver.sales_buyinggroups                 loaded=2         archived=0      quarantined=0     dup=0    invalid_casts=0
+2026-11-06 11:45:10 | INFO    |   silver.sales_customers                    loaded=1484      archived=2304   quarantined=0     dup=0    invalid_casts=0
+2026-11-06 11:45:16 | INFO    |   silver.sales_orders                       loaded=1068847   archived=0      quarantined=0     dup=0    invalid_casts=0
+2026-11-06 11:45:25 | INFO    |   silver.sales_orderlines                   loaded=2219399   archived=0      quarantined=43    dup=0    invalid_casts=0
+2026-11-06 11:45:32 | INFO    |   silver.sales_invoices                     loaded=583461    archived=0      quarantined=41    dup=0    invalid_casts=0
+2026-11-06 11:45:38 | INFO    |   silver.sales_invoicelines                 loaded=1280094   archived=0      quarantined=41    dup=0    invalid_casts=0
+2026-11-06 11:45:40 | INFO    |   silver.sales_customertransactions         loaded=599326    archived=0      quarantined=41    dup=0    invalid_casts=0
+2026-11-06 11:45:40 | INFO    | [DONE ] load_oltp_silver in 31.8s
+2026-11-06 11:45:40 | INFO    | [START] validate_oltp - OLTP data-quality gate
+2026-11-06 11:45:41 | INFO    |   [PASS] pk_not_null:sales_customers                            
+2026-11-06 11:45:41 | INFO    |   [PASS] pk_not_null:warehouse_stockitems                       
+2026-11-06 11:45:41 | INFO    |   [PASS] pk_not_null:application_people                         
+2026-11-06 11:45:41 | INFO    |   [PASS] pk_not_null:application_cities                         
+2026-11-06 11:45:41 | INFO    |   [PASS] pk_not_null:sales_orders                               
+2026-11-06 11:45:41 | INFO    |   [PASS] pk_not_null:sales_orderlines                           
+2026-11-06 11:45:41 | INFO    |   [PASS] pk_not_null:sales_invoices                             
+2026-11-06 11:45:41 | INFO    |   [PASS] pk_not_null:sales_invoicelines                         
+2026-11-06 11:45:41 | INFO    |   [PASS] unique_key:sales_customers                             
+2026-11-06 11:45:41 | INFO    |   [PASS] unique_key:warehouse_stockitems                        
+2026-11-06 11:45:41 | INFO    |   [PASS] unique_key:application_people                          
+2026-11-06 11:45:41 | INFO    |   [PASS] unique_key:sales_orders                                
+2026-11-06 11:45:41 | INFO    |   [PASS] unique_key:sales_orderlines                            
+2026-11-06 11:45:41 | INFO    |   [PASS] unique_key:sales_invoices                              
+2026-11-06 11:45:41 | INFO    |   [PASS] unique_key:sales_invoicelines                          
+2026-11-06 11:45:41 | INFO    |   [PASS] fk:customers.bill_to_customer_id                       
+2026-11-06 11:45:41 | INFO    |   [PASS] fk:orders.backorder_order_id                           
+2026-11-06 11:45:41 | INFO    |   [PASS] valid:orderlines.quantity>0                            
+2026-11-06 11:45:41 | INFO    |   [PASS] valid:orderlines.picked<=quantity                      
+2026-11-06 11:45:41 | INFO    |   [PASS] valid:invoicelines.quantity                            
+2026-11-06 11:45:41 | INFO    |   [PASS] valid:invoicelines.amounts                             
+2026-11-06 11:45:41 | INFO    |   [PASS] valid:prices>=0                                        
+2026-11-06 11:45:41 | INFO    |   [PASS] valid:transaction_dates_in_range                       
+2026-11-06 11:45:41 | INFO    |   [PASS] sequence:expected_delivery>=order_date                 
+2026-11-06 11:45:41 | INFO    |   [PASS] sequence:invoice_date>=order_date                      
+2026-11-06 11:45:41 | INFO    |   [PASS] sequence:delivery>=invoice_date                        
+2026-11-06 11:45:41 | INFO    |   [PASS] reconcile:bronze=silver+archive+quarantine+duplicates  
+2026-11-06 11:45:41 | INFO    |   [PASS] quarantine:share_within_tolerance                      
+2026-11-06 11:45:41 | WARNING |   [WARN] quarantine:rows_this_run                                failed_rows=166  (Rows rejected into quarantine during this run (inspect quarantine.rejected_records))
+2026-11-06 11:45:41 | INFO    |   [PASS] required_tables_not_empty                              
+2026-11-06 11:45:41 | INFO    | [DONE ] validate_oltp in 0.3s
+2026-11-06 11:45:41 | INFO    | [START] prepare_olap - Gold schema + OLAP staging tables
+2026-11-06 11:45:41 | INFO    |   executing sql/gold/00_olap_ddl.sql
+2026-11-06 11:45:41 | INFO    |   executing sql/gold/01_stage.sql
+2026-11-06 11:45:43 | INFO    |   stage.city                      37940 rows
+2026-11-06 11:45:43 | INFO    |   stage.customer                   1484 rows
+2026-11-06 11:45:43 | INFO    |   stage.employee                     70 rows
+2026-11-06 11:45:43 | INFO    |   stage.stock_item                  227 rows
+2026-11-06 11:45:43 | INFO    |   stage.delivery_method              10 rows
+2026-11-06 11:45:43 | INFO    |   stage.order_line              2219399 rows
+2026-11-06 11:45:43 | INFO    |   stage.sale                    1280094 rows
+2026-11-06 11:45:43 | INFO    | [DONE ] prepare_olap in 2.0s
+2026-11-06 11:45:43 | INFO    | [START] load_dimensions - dim_date + SCD1/SCD2 dimensions
+2026-11-06 11:45:43 | INFO    |   executing sql/gold/02_dim_date.sql
+2026-11-06 11:45:43 | INFO    |   gold.dim_date               1827 rows
+2026-11-06 11:45:43 | INFO    |   gold.dim_city               SCD1 new_members=0      new_versions=0    type1_updates=0    unchanged=37940
+2026-11-06 11:45:43 | INFO    |   gold.dim_customer           SCD2 new_members=0      new_versions=3    type1_updates=1    unchanged=1480
+2026-11-06 11:45:43 | INFO    |   gold.dim_employee           SCD1 new_members=0      new_versions=0    type1_updates=0    unchanged=70
+2026-11-06 11:45:43 | INFO    |   gold.dim_stock_item         SCD2 new_members=0      new_versions=2    type1_updates=1    unchanged=224
+2026-11-06 11:45:43 | INFO    |   gold.dim_delivery_method    SCD1 new_members=0      new_versions=0    type1_updates=0    unchanged=10
+2026-11-06 11:45:43 | INFO    | [DONE ] load_dimensions in 0.2s
+2026-11-06 11:45:43 | INFO    | [START] load_facts - fact_order, fact_sale
+2026-11-06 11:45:43 | INFO    |   executing sql/gold/10_fact_order_source.sql
+2026-11-06 11:45:47 | INFO    |   gold.fact_order   staged=2219399   inserted=0         updated=8455    deleted=0     total=2219399
+2026-11-06 11:45:47 | INFO    |   executing sql/gold/11_fact_sale_source.sql
+2026-11-06 11:45:49 | INFO    |   gold.fact_sale    staged=1280094   inserted=0         updated=6657    deleted=0     total=1280094
+2026-11-06 11:45:49 | INFO    | [DONE ] load_facts in 6.0s
+2026-11-06 11:45:49 | INFO    | [START] final_quality_checks - Final data-quality gate
+2026-11-06 11:45:49 | INFO    |   [PASS] unique_surrogate_key:dim_city                          
+2026-11-06 11:45:49 | INFO    |   [PASS] not_null_business_key:dim_city                         
+2026-11-06 11:45:49 | INFO    |   [PASS] one_current_version:dim_city                           
+2026-11-06 11:45:49 | INFO    |   [PASS] valid_range:dim_city                                   
+2026-11-06 11:45:49 | INFO    |   [PASS] unique_surrogate_key:dim_customer                      
+2026-11-06 11:45:49 | INFO    |   [PASS] not_null_business_key:dim_customer                     
+2026-11-06 11:45:49 | INFO    |   [PASS] one_current_version:dim_customer                       
+2026-11-06 11:45:49 | INFO    |   [PASS] valid_range:dim_customer                               
+2026-11-06 11:45:49 | INFO    |   [PASS] no_overlap:dim_customer                                
+2026-11-06 11:45:49 | INFO    |   [PASS] no_gaps:dim_customer                                   
+2026-11-06 11:45:49 | INFO    |   [PASS] current_is_open:dim_customer                           
+2026-11-06 11:45:49 | INFO    |   [PASS] no_redundant_versions:dim_customer                     
+2026-11-06 11:45:49 | INFO    |   [PASS] unique_surrogate_key:dim_employee                      
+2026-11-06 11:45:49 | INFO    |   [PASS] not_null_business_key:dim_employee                     
+2026-11-06 11:45:49 | INFO    |   [PASS] one_current_version:dim_employee                       
+2026-11-06 11:45:49 | INFO    |   [PASS] valid_range:dim_employee                               
+2026-11-06 11:45:49 | INFO    |   [PASS] unique_surrogate_key:dim_stock_item                    
+2026-11-06 11:45:49 | INFO    |   [PASS] not_null_business_key:dim_stock_item                   
+2026-11-06 11:45:49 | INFO    |   [PASS] one_current_version:dim_stock_item                     
+2026-11-06 11:45:49 | INFO    |   [PASS] valid_range:dim_stock_item                             
+2026-11-06 11:45:49 | INFO    |   [PASS] no_overlap:dim_stock_item                              
+2026-11-06 11:45:49 | INFO    |   [PASS] no_gaps:dim_stock_item                                 
+2026-11-06 11:45:49 | INFO    |   [PASS] current_is_open:dim_stock_item                         
+2026-11-06 11:45:49 | INFO    |   [PASS] no_redundant_versions:dim_stock_item                   
+2026-11-06 11:45:49 | INFO    |   [PASS] unique_surrogate_key:dim_delivery_method               
+2026-11-06 11:45:49 | INFO    |   [PASS] not_null_business_key:dim_delivery_method              
+2026-11-06 11:45:49 | INFO    |   [PASS] one_current_version:dim_delivery_method                
+2026-11-06 11:45:49 | INFO    |   [PASS] valid_range:dim_delivery_method                        
+2026-11-06 11:45:49 | INFO    |   [PASS] dim_date:fiscal_year_rule                              
+2026-11-06 11:45:49 | INFO    |   [PASS] unique_grain:fact_order                                
+2026-11-06 11:45:49 | INFO    |   [PASS] unique_grain:fact_sale                                 
+2026-11-06 11:45:49 | INFO    |   [PASS] completeness:fact_order=stage                          
+2026-11-06 11:45:49 | INFO    |   [PASS] completeness:fact_sale=stage                           
+2026-11-06 11:45:49 | INFO    |   [PASS] reconcile:fact_sale_amount=oltp                        
+2026-11-06 11:45:49 | INFO    |   [PASS] reconcile:fact_order_quantity=oltp                     
+2026-11-06 11:45:49 | INFO    |   [PASS] fact_keys_not_null:fact_order                          
+2026-11-06 11:45:49 | INFO    |   [PASS] fact_keys_not_null:fact_sale                           
+2026-11-06 11:45:49 | INFO    |   [PASS] fact_keys_exist:fact_sale                              
+2026-11-06 11:45:49 | INFO    |   [PASS] fact_keys_exist:fact_order                             
+2026-11-06 11:45:49 | INFO    |   [PASS] unknown_members:fact_sale                              
+2026-11-06 11:45:49 | INFO    |   [PASS] unknown_members:fact_order                             
+2026-11-06 11:45:49 | INFO    |   [PASS] scd_point_in_time:fact_sale                            
+2026-11-06 11:45:49 | INFO    |   [PASS] scd_point_in_time:fact_order                           
+2026-11-06 11:45:49 | INFO    |   [PASS] valid:fact_measures                                    
+2026-11-06 11:45:49 | INFO    | [DONE ] final_quality_checks in 0.5s
+2026-11-06 11:45:49 | INFO    | ====================================================================================================
+2026-11-06 11:45:49 | INFO    | Pipeline run 20261106T114453_03f591 SUCCEEDED in 56.1s  (log: /home/user/asb-de-cs/logs/pipeline_20261106T114453_03f591.log)
+2026-11-06 11:45:49 | INFO    | ====================================================================================================
