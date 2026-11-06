@@ -1,1 +1,2 @@
 duckdb==1.4.4
+kagglehub[pandas-datasets]>=0.3.13

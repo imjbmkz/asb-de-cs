@@ -2,7 +2,6 @@
 data/raw/
 data/batches/
 data/warehouse/
-data/downloads/
 *.duckdb
 *.duckdb.wal
 

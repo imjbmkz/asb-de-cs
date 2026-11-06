@@ -7,7 +7,7 @@ name = "wwi-pipeline"
 version = "1.0.0"
 description = "End-to-end Wide World Importers data pipeline (CSV -> bronze -> silver/OLTP -> gold/OLAP) on DuckDB"
 requires-python = ">=3.10"
-dependencies = ["duckdb==1.4.4"]
+dependencies = ["duckdb==1.4.4", "kagglehub[pandas-datasets]>=0.3.13"]
 
 [project.scripts]
 wwi-pipeline = "wwi_pipeline.cli:main"

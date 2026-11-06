@@ -5,7 +5,7 @@ PY ?= python3
 install:            ## install dependencies (DuckDB only)
 	$(PY) -m pip install -r requirements.txt
 
-download:           ## download the raw CSV files from Kaggle (or mirror)
+download:           ## download the raw CSV files from Kaggle (kagglehub)
 	$(PY) run_pipeline.py download
 
 pipeline:           ## run the complete pipeline (single entry point)
